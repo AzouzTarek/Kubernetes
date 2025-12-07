@@ -28,14 +28,10 @@ v
 v
 [ PostgreSQL ]
 
-yaml
-Copier le code
 
 ---
 
 ## 📁 Structure du Projet
-
-.
 ├── deploy.sh
 └── K8s/
     ├── namespace.yml
@@ -61,10 +57,6 @@ Copier le code
         ├── frontend-deployment.yml
         └── frontend-service.yml
 
-yaml
-Copier le code
-
----
 
 ## ⚙️ Prérequis
 
