@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-runtime-config
+  namespace: fullstack
+data:
+  config.js: |
+    window.__RUNTIME_CONFIG__ = {
+      // Option NodePort (appel depuis le navigateur)
+      NGINX_API: "http://192.168.100.10:30188", // IP du node + NodePort pour nginx reverse proxy
+      
+    };

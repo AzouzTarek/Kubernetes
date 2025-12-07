@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: lab-k3s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: azouztarek/backend:v1
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PORT
+          value: "5000"
+        - name: MONGO_HOST
+          value: "db-service"          # Le nom du service Mongo interne
+        - name: MONGO_PORT
+          value: "27017"
+        - name: MONGO_DB
+          value: "labdb"

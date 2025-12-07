@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-service
+  namespace: fullstack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-service
+  template:
+    metadata:
+      labels:
+        app: book-service
+    spec:
+      containers:
+      - name: book-service
+        image: azouztarek/book-service:v5
+        ports:
+        - containerPort: 5001
+        env:
+        - name: PG_HOST
+          value: postgres-0.postgres.fullstack.svc.cluster.local
+        - name: PG_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: PG_PORT
+        - name: PG_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+        - name: PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+        - name: PG_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: PG_DB_NAME
+        - name: PG_SSLMODE
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: PG_SSLMODE

@@ -1,0 +1,135 @@
+/* --- Reset & Base --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* --- Container --- */
+.container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: fadeIn 0.8s ease forwards;
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+}
+
+h1 {
+  font-size: 32px;
+  color: #fff;
+  margin-bottom: 25px;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+}
+
+h2 {
+  color: #f0f0f0;
+  font-size: 20px;
+  margin-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 15px;
+}
+
+/* --- Form --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+input {
+  padding: 12px 15px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  background: #fff;
+  box-shadow: 0 0 8px #66a6ff;
+}
+
+/* --- Button --- */
+button {
+  background: linear-gradient(90deg, #66a6ff, #89f7fe);
+  color: white;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #89f7fe, #66a6ff);
+  transform: translateY(-3px);
+}
+
+/* --- Liste --- */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+ul li {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+ul li:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* --- Footer --- */
+footer {
+  margin-top: 30px;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: step-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: azouztarek/backend:v1.2
+        ports:
+        - containerPort: 5000
+        env:
+          - name: MONGO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: app-config
+                key: MONGO_HOST
+          - name: MONGO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: app-config
+                key: MONGO_PORT
+          - name: MONGO_DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: app-config
+                key: MONGO_DB_NAME
+          - name: MONGO_USER
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: MONGO_INITDB_ROOT_USERNAME
+          - name: MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: MONGO_INITDB_ROOT_PASSWORD

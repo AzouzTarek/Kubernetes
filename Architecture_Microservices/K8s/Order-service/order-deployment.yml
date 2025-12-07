@@ -1,0 +1,59 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: fullstack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: azouztarek/order-service:v7
+          ports:
+            - containerPort: 5002
+          env:
+            # ---------- Book Service URL (ConfigMap) ----------
+            - name: BOOK_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: order-service-config   # <-- ConfigMap ci-dessus
+                  key: BOOK_SERVICE_URL
+
+            # ---------- PostgreSQL  ----------
+            - name: PG_HOST
+              value: postgres-0.postgres.fullstack.svc.cluster.local
+            - name: PG_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: PG_PORT
+            - name: PG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: PG_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: PG_DB_NAME
+            - name: PG_SSLMODE
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: PG_SSLMODE
+
+         

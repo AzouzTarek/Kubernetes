@@ -1,0 +1,66 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-conf
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+
+    events {
+        worker_connections 1024;
+    }
+
+    http {
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+
+        # Fichier (ConfigMap) où l'on définit les variables des services
+        include /etc/nginx/conf.d/services.conf;
+
+        # (Optionnel) timeout & proxy settings de base
+        proxy_connect_timeout 5s;
+        proxy_read_timeout 60s;
+        proxy_send_timeout 60s;
+
+        # (Optionnel) headers communs et CORS factorisés
+        map $request_method $is_preflight {
+            default 0;
+            "OPTIONS" 1;
+        }
+
+        server {
+            listen 5000;
+
+            # Route Books
+            location /api/books {
+                proxy_pass $book_service_url;
+
+                # CORS
+                add_header 'Access-Control-Allow-Origin' '*' always;
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+                add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+
+                if ($is_preflight) { return 204; }
+            }
+
+            # Route Orders
+            location /api/orders {
+                proxy_pass $order_service_url;
+
+                # CORS
+                add_header 'Access-Control-Allow-Origin' '*' always;
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+                add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+
+                if ($is_preflight) { return 204; }
+            }
+
+            # (Optionnel) healthcheck
+            location = /healthz {
+                return 200 'ok';
+                add_header Content-Type text/plain;
+            }
+        }
+    }

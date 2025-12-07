@@ -1,0 +1,37 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: fullstack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: azouztarek/api-gateway:v13
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            # Monte le nginx.conf depuis le ConfigMap gateway-conf
+            - name: gateway-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            # Monte le services.conf depuis le ConfigMap nginx-conf
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/services.conf
+              subPath: services.conf
+      volumes:
+        - name: gateway-conf
+          configMap:
+            name: gateway-conf
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf

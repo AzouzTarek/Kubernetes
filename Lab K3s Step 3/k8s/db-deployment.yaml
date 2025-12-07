@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  namespace: step-3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:latest
+        ports:
+          - containerPort: 27017
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: MONGO_INITDB_ROOT_USERNAME
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: MONGO_INITDB_ROOT_PASSWORD
+          - name: MONGO_DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: app-config
+                key: MONGO_DB_NAME
+          - name: MONGO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: app-config
+                key: MONGO_HOST
+          - name: MONGO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: app-config
+                key: MONGO_PORT
+        volumeMounts:
+          - name: db-storage
+            mountPath: /data/db   # MongoDB stocke ses données ici
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: db1-pvc

@@ -1,0 +1,10 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  services.conf: |
+    # Définition des URLs des microservices
+    set $book_service_url  http://book-service:5001;
+    set $order_service_url http://order-service:5002;
