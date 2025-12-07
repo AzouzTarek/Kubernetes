@@ -16,22 +16,23 @@ Le déploiement est entièrement orchestré par le script `deploy.sh`.
 ## 🧱 Architecture Générale
 
 [ Frontend (React) ]
-|
-| (NodePort)
-v
+        |
+        | (NodePort)
+        v
 [ NGINX API GATEWAY ]
-|
-|----> /api/books ---> [ Book Service ]
-|
-|----> /api/orders ---> [ Order Service ]
-|
-v
-[ PostgreSQL ]
+        |
+        |----> /api/books ---> [ Book Service ]
+        |
+        |----> /api/orders --> [ Order Service ]
+        |
+        v
+    [ PostgreSQL ]
 
 
 ---
 
 ## 📁 Structure du Projet
+.
 ├── deploy.sh
 └── K8s/
     ├── namespace.yml
