@@ -14,7 +14,7 @@ Le déploiement est entièrement orchestré par le script `deploy.sh`.
 ---
 
 ## 🧱 Architecture Générale
-
+```
 [ Frontend (React) ]
         |
         | (NodePort)
@@ -27,11 +27,12 @@ Le déploiement est entièrement orchestré par le script `deploy.sh`.
         |
         v
     [ PostgreSQL ]
-
+```
 
 ---
 
 ## 📁 Structure du Projet
+```
 .
 ├── deploy.sh
 └── K8s/
@@ -57,8 +58,7 @@ Le déploiement est entièrement orchestré par le script `deploy.sh`.
         ├── frontend-config.yml
         ├── frontend-deployment.yml
         └── frontend-service.yml
-
-
+```
 ## ⚙️ Prérequis
 
 - Kubernetes fonctionnel (Minikube, K3s, AKS, EKS, etc.)
